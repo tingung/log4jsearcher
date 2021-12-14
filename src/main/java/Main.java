@@ -32,11 +32,10 @@ public class Main {
             }
         });
         files.forEach( file-> {
-            String line = "mvn -f " + file.getAbsolutePath() + " dependency:tree";
+            String line = "mvn -f " + file.getAbsolutePath() + " dependency:tree --no-snapshot-updates";
             try {
-                //System.out.println(line);
                 Process process = Runtime.getRuntime().exec(line);
-                if(hasLog4j(process)) {
+                if(hasLog4j(process, line)) {
                     System.out.println(file.getAbsolutePath());
                 }
             } catch (IOException e) {
@@ -45,12 +44,15 @@ public class Main {
         });
     }
 
-    public static boolean hasLog4j(Process process) throws IOException {
+    public static boolean hasLog4j(Process process, String command) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line = "";
         while ((line = reader.readLine()) != null) {
+            if (line.contains("FAILURE")) {
+                System.out.println(command);
+                System.exit(-1);
+            }
             if(line.contains("log4j-core")) {
-                System.out.println(line);
                 return true;
             }
         }
