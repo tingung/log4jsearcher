@@ -49,8 +49,8 @@ public class Main {
         String line = "";
         while ((line = reader.readLine()) != null) {
             if (line.contains("FAILURE")) {
-                System.out.println(command);
-                System.exit(-1);
+                System.err.println(command);
+                System.err.println(line);
             }
             if(line.contains("log4j-core")) {
                 return true;
