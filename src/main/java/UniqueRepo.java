@@ -11,8 +11,10 @@ public class UniqueRepo {
     static final String GITHUB_TRILOGY_URL = "https://github.com/trilogy-group/";
 
     public static void main(String[] args) throws IOException {
-        // change your path here
-        File c4model = new File("/home/hutingung/workspace/enghub/eng.hub/Products DS/" + args[0] + "/c4model.yaml");
+        // checkout https://github.com/trilogy-group/eng.hub to <eng.hub> and update the variable engHubPath
+        String engHubPath = "/home/hutingung/workspace/enghub/eng.hub/";
+        // args[0] is the product name
+        File c4model = new File(engHubPath + "Products DS/" + args[0] + "/c4model.yaml");
         List<String> inputs = FileUtils.readLines(c4model, StandardCharsets.UTF_8);
         Set<String> repos = new HashSet<>();
         inputs.forEach(line -> {
